@@ -2,8 +2,8 @@ import express from "express";
 import {config} from "./config/configdb.js";
 import { connectDB } from "./config/dbConnection..js";
 
-import handlebars from "express-handlebars";
-import { __dirname } from "./utils.js";
+import {__dirname} from "./utils.js";
+import { engine } from 'express-handlebars';
 import path from "path";
 import {Server} from "socket.io";
 import { productsRouter } from "./routes/products.routes.js";
@@ -25,7 +25,7 @@ const httpsServer = app.listen(port,()=>console.log(`Server esta funcionando en 
 connectDB();
 
 //configuracion de handlebars
-app.engine('.hbs', handlebars.engine({extname: '.hbs'}));
+app.engine('.hbs', engine({extname: '.hbs'}));
 app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname,"/views"));
 
@@ -57,4 +57,4 @@ socketServer.on("connection", (socketConnected)=>{
 //acceso de routes
 app.use("/api/products", productsRouter);
 app.use("/api/carts" , cartsRouter );
-app.use("/index",viewsRouter);
+app.use(viewsRouter);

@@ -1,9 +1,8 @@
 import { Router } from "express"; 
-import { ProductController } from "../dao/productManager.js";
-import { __dirname } from '../utils.js';
+import { productService } from "../dao/index.js";
 
 
-const productService = new ProductController('/products.json')
+
 const router = Router();
 
 
@@ -14,7 +13,7 @@ const validateFields = (req,res,next)=>{
     } else {
         next();
     }
-}
+};
 
 // Obtengo los prod de acuerdo al limite de prod que ingrese
 router.get("/", async (req, res) => {
@@ -56,7 +55,7 @@ router.get("/:pid", async (req, res) => {
 });
 
 // Doy de alta el producto
-router.post("/",validateFields,async (req,res)=>{
+router.post("/",validateFields, async (req,res)=>{
     try {
         const productInfo = req.body;
         const productsCreate = await productService.save(productInfo);
