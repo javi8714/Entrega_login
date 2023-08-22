@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { productService } from "../dao/index.js";
+import { checkUserAuthenticated, showLoginView } from "../middlewares/auth.js";
+
 
 
 const router = Router();
@@ -7,53 +9,69 @@ const router = Router();
 
 //routes
 router.get("/",(req,res)=>{
-    //indicar la vista
     res.render("home");
 });
 
-router.get("/realtimeproducts",async(req,res)=>{
-    try {
-        const {limit=10,page=1,stock,sort="asc"} = req.query;
 
-        console.log(limit,page,stock,sort);
-        const stockValue = stock === 0 ? undefined : parseInt(stock);
-        if(!["asc","desc"].includes(sort)){
-            return res.render("products", {error:"Pedido no valido"})
-        };
-        const sortValue = sort === "asc" ? 1 : -1;
-        let query = {};
-        if(stockValue){
-            query = {stock:{$gte:stockValue}}
-        };
-        const resultp = await productService.getWithPaginate(query,{
-            page,
-            limit,
-            sort:{price:sortValue},
-            lean: true
-        });
-        //console.log(resultp);
+router.get("/registro",showLoginView, (req,res)=>{
+    res.render("signup");
+});
 
-        //   http://localhost:8080
-        const baseURL = '${req.protocol}://${req.get("host")}${req.originalUrl}'
-        const ViewResultProducts = {}
-           status:"success",
-           payload: result.docs,
-           totalPages: result.totalPages,
-           prevPage: result.PrevPage,
-           nextPage: result.nextPage,
-           page: result.page,
-           hasPrevPage: result.hasPrevPage,
-           hasNextPage: result.hasNextPage,
-           prevLink: result.hasPrevPage ? '${baseUrl.replace('page=${result.page}', 'page=${result.prevPage}')}' : null,
-           nextLink: result.hasNextPage ? '${baseUrl.replace('page=${result.page}', 'page=${result.nextPage}')}' : null,
-        }
-        console.log(ViewResultProducts)
-        res.render("products", ViewResultProducts);
-    } catch (error) {
-        res.render("realtimeproduct",{error:"No se pueden ver los datos"});
-    }    
-    
+router.get("/login",showLoginView, (req,res)=>{
+    res.render("login");
 });
 
 
-export {router as viewsRouter};
+router.get("/perfil", checkUserAuthenticated, (req,res)=>{
+    console.log(req.session);
+    res.render("profile", {user: req.session.userInfo});
+});
+
+
+router.get("/realtimeproducts", async (req, res) => {
+    try {
+        const { limit = 10, page = 1, stock, sort = "asc" } = req.query;
+
+        console.log(limit, page, stock, sort);
+        const stockValue = stock === 0 ? undefined : parseInt(stock);
+        if (!["asc", "desc"].includes(sort)) {
+            return res.render("products", { error: "Pedido no valido" });
+        }
+        const sortValue = sort === "asc" ? 1 : -1;
+        let query = {};
+        if (stockValue) {
+            query = { stock: { $gte: stockValue } };
+        }
+        const resultp = await productService.getWithPaginate(query, {
+            page,
+            limit,
+            sort: { price: sortValue },
+            lean: true,
+        });
+        
+        // http://localhost:8080
+        const baseURL = `${req.protocol}://${req.get("host")}${req.originalUrl}`;
+        const ViewResultProducts = {
+            status: "success",
+            payload: resultp.docs,
+            totalPages: resultp.totalPages,
+            prevPage: resultp.PrevPage,
+            nextPage: resultp.nextPage,
+            page: resultp.page,
+            hasPrevPage: resultp.hasPrevPage,
+            hasNextPage: resultp.hasNextPage,
+            prevLink: resultp.hasPrevPage
+                ? `${baseURL.replace(`page=${resultp.page}`, `page=${resultp.prevPage}`)}`
+                : null,
+            nextLink: resultp.hasNextPage
+                ? `${baseURL.replace(`page=${resultp.page}`, `page=${resultp.nextPage}`)}`
+                : null,
+        };
+        console.log(ViewResultProducts);
+        res.render("products", ViewResultProducts);
+    } catch {
+        res.render("realtimeproduct", { error: "No se pueden ver los datos" });
+    }
+});
+
+export { router as viewsRouter };
