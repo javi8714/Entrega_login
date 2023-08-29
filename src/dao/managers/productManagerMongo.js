@@ -1,9 +1,9 @@
 import { productsModel } from "../models/products.model.js"
 
-export class ProductManagerMongo{
+export class ProductManagerMongo {
   constructor(){
        this.model = productsModel;              
-  };
+    }
 
 
     async get(){
@@ -13,7 +13,7 @@ export class ProductManagerMongo{
       } catch (error) {
           throw error;
       }
-    };
+    }
 
     async getPaginate(query, options){
         try { 
@@ -22,7 +22,7 @@ export class ProductManagerMongo{
         } catch (error) {
            throw error;
         }
-    };
+    }
 
 
     getProductById = async (id) => {
@@ -33,7 +33,7 @@ export class ProductManagerMongo{
             return { error: err.message }
         }
 
-    };
+    }
     
     async save(product){
       try {
@@ -42,7 +42,7 @@ export class ProductManagerMongo{
       } catch (error) {
           throw error;
       }
-    };  
+    } 
 
 
 
@@ -66,7 +66,7 @@ export class ProductManagerMongo{
             return err
         }
 
-    };
+    }
 
 
 
@@ -77,6 +77,6 @@ export class ProductManagerMongo{
             return err
         }
 
-    };
+    }
 
-}
+};

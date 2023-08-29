@@ -23,8 +23,12 @@ router.get("/login",showLoginView, (req,res)=>{
 
 
 router.get("/perfil", checkUserAuthenticated, (req,res)=>{
-    console.log(req.session);
-    res.render("profile", {user: req.session.userInfo});
+    console.log(req.user);
+    res.render("profile",{user: JSON.parse(JSON.stringify(req.user))});
+});
+
+router.get("/cambio-password",(req,res)=>{
+    res.render("changePassword")
 });
 
 

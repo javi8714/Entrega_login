@@ -1,17 +1,21 @@
 import express from "express";
 import {config} from "./config/config.js";
+import { engine } from 'express-handlebars';
 import { Server } from 'socket.io';
 import { connectDB } from "./config/dbConnection..js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
-import { chatModel } from './dao/models/chat.model.js';
+import { initializePassport } from "./config/passportConfig.js";
+import passport from "passport";
+import { viewsRouter } from "./routes/views.routes.js";
+import { sessionsRouter } from "./routes/sessions.routes.js";
+import { chatModel } from './dao/models/chat.models.js';
 import {__dirname} from "./utils.js";
-import { engine } from 'express-handlebars';
 import path from "path";
 import { productsRouter } from "./routes/products.routes.js";
 import { cartsRouter } from "./routes/carts.routes.js";
-import { viewsRouter } from "./routes/views.routes.js";
-import { sessionsRouter } from "./routers/sessions.routes.js";
+
+
 
 
 const port = config.server.port;
@@ -27,13 +31,17 @@ app.use(express.urlencoded({extended:true})); //manejo de formularios de vistas
 //configuracion de los sesiones
 app.use(session({
     store:MongoStore.create({
-        ttl:30,
-        mongoUrl:"mongodb+srv://javierdibalada14:Moreno8714)@cluster0.iye3imd.mongodb.net/sessionsBD?retryWrites=true&w=majority"
+        mongoUrl:config.mongo.url
     }),
     secret:config.server.secretSession,
     resave:true,
     saveUninitialized:true
 }));
+
+//configuracion de passport
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 const httpsServer = app.listen(port,()=>console.log(`Server esta funcionando en el puerto ${port}`));

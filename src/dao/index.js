@@ -1,6 +1,6 @@
-import { ProductManagerMongo } from "./mongo/productManagerMongo.js"
-import { CartManagerMongo } from "./mongo/cartManagerMongo.js";
-import { connectDB } from "../config/dbConnection.js";
+import { ProductManagerMongo } from "./managers/productManagerMongo.js"
+import { CartManagerMongo } from "./managers/cartManagerMongo.js";
+import { connectDB } from "../config/dbConnection..js";
 import { UsersMongo } from "./managers/users.mongo.js";
 
 
@@ -12,5 +12,5 @@ const cartService = new CartManagerMongo();
 const usersService = new UsersMongo();
 
 
-export {productService, cartService,usersService }
+export {productService, cartService, usersService }
 
