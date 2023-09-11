@@ -5,7 +5,7 @@ export const config = {
     },
     FileSystem: {
         prdoductsFile:"products.json",
-        cartsFile:"carts.json",
+        cartFile:"carts.json",
     },
     mongo:{
        url:"mongodb+srv://javierdibalada14:Moreno8714)@cluster0.iye3imd.mongodb.net/?retryWrites=true&w=majority"
