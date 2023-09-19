@@ -1,68 +1,32 @@
 import { Router } from "express";
-import { usersService } from "../dao/index.js";
+import { usersDao } from "../dao/managers/index.js";
 import { createHash, isValidPassword } from "../utils.js";
-import passport from"passport";
+import passport from "passport";
+import { SessionsController } from "../controllers/session.controller.js";
 
 const router = Router();
 
 router.post("/signup", passport.authenticate("signupStrategy",{
-    failureRedirect:"/api/sessions/fail-sipnup"
-}) ,(req,res)=>{
-    res.render("login", {message:"usuario registrado"});
-});
+    failureRedirect:"/api/sessions/fail-signup"
+}) , SessionsController.signup);
 
-router.get("/fail-signup",(req,res)=>{
-    res.render("signup",{error:"No se pudo registrar al usuario"});
-});
+router.get("/fail-signup", SessionsController.failSignup);
 
 router.post("/login", passport.authenticate("loginStrategy",{
     failureRedirect:"/api/sessions/fail-login"
-}), (req,res)=>{
-    res.redirect("/perfil");
-});
+}), SessionsController.redirectLogin);
 
-router.get("/fail-login", (req,res)=>{
-    res.render("login",{error:"Credenciales invalidas"});
-});
+router.get("/fail-login", SessionsController.failLogin);
 
+router.post("/changePass", SessionsController.changePassword);
 
-router.post("/changePass", async(req,res)=>{
-    try {
-        const form = req.body;
-        const user = await usersService.getByEmail(form.email);
-        if(!user){
-            return res.render("changePassword",{error:"No se puede cambiar la contraseña"});
-        }
-        user.password = createHash(form.newpassword);
-        console.log(user);
-        await usersService.update(user.id,user);
-        return res.render("login",{message:"Contraseña restaurada con exito"})
-    } catch (error) {
-        res.render("changePassword",{error:error.message});
-    }
-});
+router.get("/loginGithub", passport.authenticate("githubLoginStrategy"));
 
-router.get("/loginGithub", passport.authenticate("githubloginStrategy"));
-
-router.get("/github-callback", passport.authenticate("githubloginStrategy",{
+router.get("/github-callback", passport.authenticate("githubLoginStrategy",{
     failureRedirect:"/api/sessions/fail-signup"
-}), (req,res)=>{
-    res.redirect("/perfil");
-});
+}), SessionsController.loginGitHub);
 
-router.get("/logout", (req,res)=>{
-    req.logOut(error=>{
-        if(error){
-            return res.render("profile",{user: req.user, error:"No se pudo cerrar la sesion"});
-        } else {
-            //elimina la sesion de la base de datos
-            req.session.destroy(error=>{
-                if (error) return res.render("profile",{user: req.session.userInfo, error: "No se pudo cerrar la sesion"});
-                res.redirect("/");
-            })
-        }
-    })
-    
-});
+router.get("/logout", SessionsController.logout);
 
 export {router as sessionsRouter};
+

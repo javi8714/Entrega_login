@@ -1,17 +1,13 @@
 import { Router } from "express"; 
-import { cartService, productService } from "../dao/index.js";
+import { CartManagerMongo } from "../dao/managers/cartManagerMongo.js";
+import { ProductManagerMongo } from "../dao/managers/productManagerMongo.js";
+import { productSDao } from "../dao/index.js";
+import { cartService } from "../controllers/cart.controller.js";
 
 
 const router = Router();
 
-router.post("/", async (req, res) => {
-    try {
-        const cartCreated = await cartService.save();
-        res.json({ status: "success", data: cartCreated });
-    } catch (error) {
-        res.json({ status: "error", message: error.message });
-    }
-});
+router.post("/", cartService.createCart);
 
 
 // Traigo todos los carritos
