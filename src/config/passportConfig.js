@@ -20,10 +20,16 @@ export const initializePassport = ()=>{
                 if(user){
                     return done(null, false)
                 }
+                //hace una validacion desde la ultima letra hacia atras hasta el final para ver que tengan esos caracteres
+                let role = "user";
+                if(username.endsWith("@coder123.com")){
+                    role="admin";
+                }
                 const newUser = {
                     first_name:first_name,
                     email: username,
-                    password:createHash(password)
+                    password:createHash(password),
+                    role:role
                 }
                 const userCreated = await usersService.save(newUser);
                 return done(null,userCreated)//En este punto passport completa el proceso de manera satisfactoria

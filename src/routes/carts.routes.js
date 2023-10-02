@@ -1,8 +1,12 @@
 import { Router } from "express"; 
-import { cartService, productService } from "../dao/index.js";
+import { cartService } from "../dao/index.js";
+import { TicketsController } from "../controllers/tickets.controller.js";
+
 
 
 const router = Router();
+
+router.post("/:cid/purchase", TicketsController.createTicket);
 
 router.post("/", async (req, res) => {
     try {

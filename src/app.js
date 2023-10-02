@@ -1,20 +1,19 @@
 import express from "express";
 import {config} from "./config/config.js";
 import { engine } from 'express-handlebars';
-import { Server } from 'socket.io';
-import { connectDB } from "./config/dbConnection..js";
+import path from "path";
+import {__dirname} from "./utils.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import { initializePassport } from "./config/passportConfig.js";
 import passport from "passport";
 import { viewsRouter } from "./routes/views.routes.js";
 import { sessionsRouter } from "./routes/sessions.routes.js";
+import { Server } from 'socket.io';
+import { connectDB } from "./config/dbConnection..js";
 import { chatModel } from './dao/models/chat.models.js';
-import {__dirname} from "./utils.js";
-import path from "path";
 import { productsRouter } from "./routes/products.routes.js";
 import { cartsRouter } from "./routes/carts.routes.js";
-
 
 
 
@@ -23,8 +22,9 @@ const app = express();
 
 //middlewares
 app.use(express.json());
-app.use(express.static(path.join(__dirname,"/public")));
 app.use(express.urlencoded({extended:true})); //manejo de formularios de vistas
+app.use(express.static(path.join(__dirname,"/public")));
+
 
 
 
@@ -49,7 +49,7 @@ const httpsServer = app.listen(port,()=>console.log(`Server esta funcionando en 
 //conectamos a la base de datos
 connectDB();
 
-//configuracion de motor de plantillas
+//configuracion de handlebars
 app.engine('.hbs', engine({extname: '.hbs'}));
 app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname,"/views"));

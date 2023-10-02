@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
-import { productCollection } from "../../constants/index.js";
 import mongoosePaginate from "mongoose-paginate-v2";
+import { productCollection } from "../../constants/index.js";
+
 
 //const productCollection="products"
 const productSchema= new mongoose.Schema({
@@ -32,6 +33,7 @@ const productSchema= new mongoose.Schema({
     category: {
         type: String,
         required: true
+        //enum: ["Ropa","Perfumes","Deportes" ]
     },
     status: {
         type: Boolean,
