@@ -1,17 +1,17 @@
 {
-  "name": "Tercera_preentrega_ecommerce",
+  "name": "Entrega_Facker_y_Mock",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon src/app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@faker-js/faker": "^8.1.0",
     "bcrypt": "^5.1.1",
     "connect-mongo": "^5.0.0",
     "cookie-parser": "^1.4.6",
