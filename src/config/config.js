@@ -1,14 +1,17 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 export const config = {
     server : {
-        port:8080,
-        secretSession:"claveSecretaSessions"
+        port:process.env.PORT,
+        secretSession:process.env.SECERT_SESSION
     },
     FileSystem: {
         prdoductsFile:"products.json",
-        cartsFile:"carts.json",
+        cartsFile:"carts.json",º
     },
     mongo:{
-       url:"mongodb+srv://javierdibalada14:Moreno8714)@cluster0.iye3imd.mongodb.net/?retryWrites=true&w=majority"
+       url:process.env.MONGO_URL
     },
     github:{
         clientId:"Iv1.e4a88cda317cbcdd",

@@ -1,14 +1,18 @@
-import { Router } from 'express';
-import { ProductsController } from '../controllers/products.controller.js';
-import { checkRole, checkUserAuthenticated } from "../middlewares/auth.js";
 
+import { Router } from "express"; 
+import { productSDao } from "../dao/managers/index.js";
+import { ProductsController } from "../controllers/products.controller.js";
 
-const router = Router()
+const routerA = Router()
 
-router.get('/', ProductsController.getProducts)
-router.get("/:pid", ProductsController.getProductID);
-router.post("/", checkUserAuthenticated, checkRole(["admin", "superadmin"]), ProductsController.createProduct);
-router.put("/:pid", checkUserAuthenticated, ProductsController.updateProduct);
-router.delete("/:pid", checkUserAuthenticated, checkRole(["admin"]), ProductsController.deleteProduct);
+routerA.get('/', ProductsController.getProducts)
 
-export {router as productsRouter}
+routerA.get("/:pid", ProductsController.getProductID);
+
+routerA.post("/", ProductsController.createProduct);
+
+routerA.put("/:pid", ProductsController.updateProduct);
+
+routerA.delete("/:pid", ProductsController.deleteProduct);
+
+export {routerA as productsRouter}
