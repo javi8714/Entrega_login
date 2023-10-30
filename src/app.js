@@ -11,14 +11,15 @@ import { viewsRouter } from "./routes/views.routes.js";
 import { sessionsRouter } from "./routes/sessions.routes.js";
 import { Server } from 'socket.io';
 import { connectDB } from "./config/dbConnection..js";
+import socketProducts from "./listeners/socketProducts.js"
+import socketChat from './listeners/socketChat.js';
 import { chatModel } from './dao/models/chat.models.js';
 import { productsRouter } from "./routes/products.routes.js";
 import { cartsRouter } from "./routes/carts.routes.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { generateUser } from './utils/helpers.js'; 
 import { addLogger } from "./helpers/logger.js";
-import { Logger } from "winston";
-
+import { usersRouter } from "./routes/users.routes.js";
 
 
 const port = config.server.port;
@@ -62,12 +63,12 @@ initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 //acceso de routes
 app.use(viewsRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/sessions", sessionsRouter);
+app.use("/api/users", usersRouter);
 app.use(errorHandler);
 
 
@@ -180,4 +181,9 @@ app.get("/operacionCompleja",(req,res)=>{
     }
     res.send(`La suma es igual a ${sum}`);
 });
+
+
+
+
+
 

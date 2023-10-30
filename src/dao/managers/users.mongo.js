@@ -16,7 +16,7 @@ export class UsersMongo{
 
     async getById(userId){
         try {
-            const user = await this.model.findById(userId);
+            const user = await this.model.findById(userId).lean;
             if(user){
                 return user;
             } else{
@@ -45,6 +45,7 @@ export class UsersMongo{
             const userUpdated = await this.model.findByIdAndUpdate(userId,newUserInfo,{new:true})
             return userUpdated;
         } catch (error) {
+            console.log(error.message);
             throw error;
         }
     };
