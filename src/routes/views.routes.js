@@ -1,25 +1,25 @@
 import { Router } from "express";
 import { checkUserAuthenticated, showLoginView } from "../middlewares/auth.js";
-import { ViewsController } from "../controllers/views.controller.js";
+import { ViewController } from "../controllers/views.controller.js";
 
 const routerB = Router();
 
 
 //routes
 
-routerB.get("/", ViewsController.renderHome);
+routerB.get("/", ViewController.renderHome);
 
-routerB.get("/realtimeproducts", ViewsController.rendeRealTimeProducts);
+routerB.get("/realtimeproducts", ViewController.rendeRealTimeProducts);
 
 routerB.get("/chat", ViewController.renderChat);
 
-routerB.get("/registro", showLoginView, Viewsontroller.renderRegistro);
+routerB.get("/registro", showLoginView, ViewController.renderRegistro);
 
-routerB.get("/login", showLoginView, ViewsController.renderLogin);
+routerB.get("/login", showLoginView, ViewController.renderLogin);
 
-routerB.get("/cambio-password", showLoginView, ViewsController.renderCambioPassword);
+routerB.get("/cambio-password", showLoginView, ViewController.renderCambioPassword);
 
-routerB.get("/profile", checkUserAuthenticated, ViewsController.renderProfile);
+routerB.get("/profile", checkUserAuthenticated, ViewController.renderProfile);
 
 routerB.get("/forgot-password", ViewController.renderForgot);
 

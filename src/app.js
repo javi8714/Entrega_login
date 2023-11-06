@@ -20,6 +20,9 @@ import { errorHandler } from "./middlewares/errorHandler.js";
 import { generateUser } from './utils/helpers.js'; 
 import { addLogger } from "./helpers/logger.js";
 import { usersRouter } from "./routes/users.routes.js";
+import { swaggerSpecs } from './config/swagger.config.js';
+import swaggerUI from "swagger-ui-express";
+
 
 
 const port = config.server.port;
@@ -69,6 +72,7 @@ app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/sessions", sessionsRouter);
 app.use("/api/users", usersRouter);
+app.use("/api/docs", swaggerUI.serve,swaggerUI.setup(swaggerSpecs));
 app.use(errorHandler);
 
 
@@ -181,6 +185,9 @@ app.get("/operacionCompleja",(req,res)=>{
     }
     res.send(`La suma es igual a ${sum}`);
 });
+
+//endpoint para acceder a la documentacion de la api
+app.use("/api/docs",swaggerUI.serve,swaggerUI.setup(swaggerSpecs));
 
 
 

@@ -1,9 +1,9 @@
-import { cartsModel } from "../models/carts.model.js";
+import { cartModel } from "../models/carts.model.js";
 
 
 export class CartManagerMongo{
   constructor(){
-      this.nodel=cartsModel;
+      this.nodel=cartModel;
     
   };
    
@@ -35,9 +35,9 @@ export class CartManagerMongo{
       } catch (error) {
         throw new Error(error.message);
       }
-  };
+    };
 
-  async save() {
+    async save() {
     try {
         const cartCreation = await this.model.create({});
         return cartCreation;
@@ -46,20 +46,21 @@ export class CartManagerMongo{
     }
   };
 
-   // Actualizo carrito
-  async updateCart(cid, updatedFields) {
-    try {
-        let cart = await this.getCartById(cid);
-        if (!cart) return;
-        Object.keys(updatedFields).forEach((key) => {
-            cart[key] = updatedFields[key];
-        });
-        const data = JSON.stringify(this.carts, null, 4);
-        await fs.promises.writeFile(this.path, data);
-        console.log('Carrito actualizado:', cart);
-        return 'Archivo de carrito guardado.';
-    } catch (error) {
-        throw new Error(error.message);
+    deleteProductInCart = async (cid, products) => {
+        try {
+        return await cartModel.findOneAndUpdate(
+            { _id: cid },
+            { products },
+            { new: true })
+        } catch (err) {
+            return err
+        }
     }
-  };
-} 
+
+    updateOneProduct = async (cid, products) => {
+        await cartModel.updateOne(
+            { _id: cid },
+            { products })
+        return await cartModel.findOne({ _id: cid })
+    }
+};
