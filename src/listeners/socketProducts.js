@@ -19,6 +19,13 @@ const socketProducts = (socketServer) => {
             const listadeproductos = await pm.getProductsView()
             socketServer.emit("enviodeproducts", listadeproductos)
         })
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> bd896478c799f9a9ea99440a64c99bb64ae0ca3c
     })
 };
 

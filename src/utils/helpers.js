@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {faker,Faker,es,en} from "@faker-js/faker";
 
 
@@ -33,3 +34,5 @@ export const generateUser = ()=>{
     };
 };
 
+=======
+>>>>>>> bd896478c799f9a9ea99440a64c99bb64ae0ca3c

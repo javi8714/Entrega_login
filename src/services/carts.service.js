@@ -1,5 +1,5 @@
 //importar la capa de persisitencia
-import { cartsDao } from "../dao/managers/index.js";
+import { cartsDao } from "../dao/index.js";
 
 export class CartsService{
     static getCarts = async()=>{

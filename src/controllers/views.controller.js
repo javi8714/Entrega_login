@@ -30,9 +30,24 @@ export class ViewController {
         res.render("profile", { user: req.user });
         
     }
+<<<<<<< HEAD
     static renderForgot = (req,res)=>{
         res.render("forgotPassword");
     };
+=======
+    static renderProfile = (req, res) => {
+        res.render("profile", { user: req.user });
+        
+    }
+    static renderForgot = (req,res)=>{
+        res.render("forgotPassword");
+    };
+
+    static renderResetPass = (req,res)=>{
+        const token = req.query.token;
+        res.render("resetPassword",{token});
+    };
+>>>>>>> bd896478c799f9a9ea99440a64c99bb64ae0ca3c
 
     static renderResetPass = (req,res)=>{
         const token = req.query.token;

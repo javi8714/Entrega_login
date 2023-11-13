@@ -11,6 +11,8 @@ import { viewsRouter } from "./routes/views.routes.js";
 import { sessionsRouter } from "./routes/sessions.routes.js";
 import { Server } from 'socket.io';
 import { connectDB } from "./config/dbConnection..js";
+import socketProducts from "./listeners/socketProducts.js"
+import socketChat from './listeners/socketChat.js';
 import { chatModel } from './dao/models/chat.models.js';
 import { productsRouter } from "./routes/products.routes.js";
 import { cartsRouter } from "./routes/carts.routes.js";
@@ -20,6 +22,10 @@ import { addLogger } from "./helpers/logger.js";
 import { usersRouter } from "./routes/users.routes.js";
 import { swaggerSpecs } from './config/swagger.config.js';
 import swaggerUI from "swagger-ui-express";
+<<<<<<< HEAD
+=======
+
+>>>>>>> bd896478c799f9a9ea99440a64c99bb64ae0ca3c
 
 
 const port = config.server.port;
@@ -42,8 +48,16 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true})); //manejo de formularios de vistas
 app.use(express.static(path.join(__dirname,"/public")));
 
+<<<<<<< HEAD
 
 
+=======
+//configuracion de handlebars
+app.engine('.hbs', engine({extname: '.hbs'}));
+app.set('view engine', '.hbs');
+app.set('views', path.join(__dirname,"/views"));
+
+>>>>>>> bd896478c799f9a9ea99440a64c99bb64ae0ca3c
 
 //configuracion de los sesiones
 app.use(session({
@@ -60,13 +74,20 @@ initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> bd896478c799f9a9ea99440a64c99bb64ae0ca3c
 //acceso de routes
 app.use(viewsRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/sessions", sessionsRouter);
 app.use("/api/users", usersRouter);
+<<<<<<< HEAD
+=======
+app.use("/api/docs", swaggerUI.serve,swaggerUI.setup(swaggerSpecs));
+>>>>>>> bd896478c799f9a9ea99440a64c99bb64ae0ca3c
 app.use(errorHandler);
 
 
@@ -75,10 +96,13 @@ const httpsServer = app.listen(port,()=>console.log(`Server esta funcionando en 
 //conectamos a la base de datos
 connectDB();
 
+<<<<<<< HEAD
 //configuracion de handlebars
 app.engine('.hbs', engine({extname: '.hbs'}));
 app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname,"/views"));
+=======
+>>>>>>> bd896478c799f9a9ea99440a64c99bb64ae0ca3c
 
 //rutas
 app.get("/",(req,res)=>{
@@ -187,7 +211,12 @@ app.get("/operacionCompleja",(req,res)=>{
 //endpoint para acceder a la documentacion de la api
 app.use("/api/docs",swaggerUI.serve,swaggerUI.setup(swaggerSpecs));
 
+<<<<<<< HEAD
 export {app}
+=======
+
+
+>>>>>>> bd896478c799f9a9ea99440a64c99bb64ae0ca3c
 
 
 

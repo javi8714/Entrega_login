@@ -1,6 +1,10 @@
 import jwt from "jsonwebtoken";
 import { config } from "../config/config.js";
+<<<<<<< HEAD
 import { gmailTransporter } from "../config/gmail.config.js";
+=======
+import { gmailTransporter } from "../config/config.gmail.js";
+>>>>>>> bd896478c799f9a9ea99440a64c99bb64ae0ca3c
 
 export const generateEmailToken = (email, expireTime)=>{
     //genera el token

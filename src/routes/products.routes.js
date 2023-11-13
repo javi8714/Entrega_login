@@ -3,7 +3,10 @@ import { Router } from "express";
 import { ProductsController } from "../controllers/products.controller.js";
 
 const routerA = Router()
+<<<<<<< HEAD
 
+=======
+>>>>>>> bd896478c799f9a9ea99440a64c99bb64ae0ca3c
 
 routerA.get('/', ProductsController.getProducts)
 

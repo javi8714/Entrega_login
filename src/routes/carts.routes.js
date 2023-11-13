@@ -3,6 +3,10 @@ import { CartManagerMongo } from "../dao/managers/cartManagerMongo.js";
 import { ProductManagerMongo } from "../dao/managers/productManagerMongo.js";
 import { productSDao } from "../dao/index.js";
 import { cartService } from "../controllers/carts.controller.js";
+<<<<<<< HEAD
+=======
+
+>>>>>>> bd896478c799f9a9ea99440a64c99bb64ae0ca3c
 
 
 const router = Router();
