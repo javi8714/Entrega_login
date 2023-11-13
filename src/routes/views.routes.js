@@ -1,20 +1,20 @@
 import { Router } from "express";
-import { ViewsController } from "../controllers/views.controller.js";
 import { checkUserAuthenticated, showLoginView } from "../middlewares/auth.js";
+import { ViewController } from "../controllers/views.controller.js";
 
-
-
-const router = Router();
+const routerb = Router();
 
 
 //routes
 
-router.get("/", ViewsController.renderHome);
-router.get("/realtimeproducts", ViewsController.rendeRealTimeProducts);
-router.get("/chat", ViewController.renderChat);
-router.get("/registro", showLoginView, Viewsontroller.renderRegistro);
-router.get("/login", showLoginView, ViewsController.renderLogin);
-router.get("/cambio-password", showLoginView, ViewsController.renderCambioPassword);
-router.get("/profile", checkUserAuthenticated, ViewsController.renderProfile);
+routerb.get("/", ViewController.renderHome);
+routerb.get("/realtimeproducts", ViewController.rendeRealTimeProducts);
+routerb.get("/chat", ViewController.renderChat);
+routerb.get("/registro", showLoginView, ViewController.renderRegistro);
+routerb.get("/login", showLoginView, ViewController.renderLogin);
+routerb.get("/cambio-password", showLoginView, ViewController.renderCambioPassword);
+routerb.get("/profile", checkUserAuthenticated, ViewController.renderProfile);
+routerb.get("/forgot-password", ViewController.renderForgot);
+routerb.get("/reset-password", ViewController.renderResetPass);
 
-export {router as viewsRouter};
+export {routerb as viewsRouter};

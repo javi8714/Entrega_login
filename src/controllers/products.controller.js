@@ -15,7 +15,26 @@ export class ProductsController {
             if (!(options.sort.price === -1 || options.sort.price === 1)) {
                 delete options.sort
             }
-            
+            const links = (products) => {
+                let prevLink;
+                let nextLink;
+                if (req.originalUrl.includes('page')) {
+                    // Si la URL original contiene el parámetro 'page', entonces:
+                    prevLink = products.hasPrevPage ? req.originalUrl.replace(`page=${products.page}`, `page=${products.prevPage}`) : null;
+                    nextLink = products.hasNextPage ? req.originalUrl.replace(`page=${products.page}`, `page=${products.nextPage}`) : null;
+                    return { prevLink, nextLink };
+                }
+                if (!req.originalUrl.includes('?')) {
+                    // Si la URL original NO contiene el carácter '?', entonces:
+                    prevLink = products.hasPrevPage ? req.originalUrl.concat(`?page=${products.prevPage}`) : null;
+                    nextLink = products.hasNextPage ? req.originalUrl.concat(`?page=${products.nextPage}`) : null;
+                    return { prevLink, nextLink };
+                }
+                // Si la URL original contiene el carácter '?' (otros parámetros), entonces:
+                prevLink = products.hasPrevPage ? req.originalUrl.concat(`&page=${products.prevPage}`) : null;
+                nextLink = products.hasNextPage ? req.originalUrl.concat(`&page=${products.nextPage}`) : null;
+                return { prevLink, nextLink };
+            }
             // Devuelve un array con las categorias disponibles y compara con la query "category"
             const categories = await ProductService.categories();
             const result = categories.some(categ => categ === category)
@@ -60,3 +79,4 @@ export class ProductsController {
         res.json({ status: "success", deleteproduct });
     };
 }
+

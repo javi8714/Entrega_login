@@ -15,7 +15,6 @@ const generateProduct = ()=>{
     }
 };
 
-
 //generar usuarios
 export const generateUser = ()=>{
     //generamos un numero aleatorio de productos que se agregaran al carrito

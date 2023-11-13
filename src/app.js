@@ -17,8 +17,9 @@ import { cartsRouter } from "./routes/carts.routes.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { generateUser } from './utils/helpers.js'; 
 import { addLogger } from "./helpers/logger.js";
-import { Logger } from "winston";
-
+import { usersRouter } from "./routes/users.routes.js";
+import { swaggerSpecs } from './config/swagger.config.js';
+import swaggerUI from "swagger-ui-express";
 
 
 const port = config.server.port;
@@ -41,10 +42,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true})); //manejo de formularios de vistas
 app.use(express.static(path.join(__dirname,"/public")));
 
-//configuracion de handlebars
-app.engine('.hbs', engine({extname: '.hbs'}));
-app.set('view engine', '.hbs');
-app.set('views', path.join(__dirname,"/views"));
+
 
 
 //configuracion de los sesiones
@@ -68,6 +66,7 @@ app.use(viewsRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/sessions", sessionsRouter);
+app.use("/api/users", usersRouter);
 app.use(errorHandler);
 
 
@@ -76,6 +75,10 @@ const httpsServer = app.listen(port,()=>console.log(`Server esta funcionando en 
 //conectamos a la base de datos
 connectDB();
 
+//configuracion de handlebars
+app.engine('.hbs', engine({extname: '.hbs'}));
+app.set('view engine', '.hbs');
+app.set('views', path.join(__dirname,"/views"));
 
 //rutas
 app.get("/",(req,res)=>{
@@ -180,4 +183,11 @@ app.get("/operacionCompleja",(req,res)=>{
     }
     res.send(`La suma es igual a ${sum}`);
 });
+
+//endpoint para acceder a la documentacion de la api
+app.use("/api/docs",swaggerUI.serve,swaggerUI.setup(swaggerSpecs));
+
+export {app}
+
+
 

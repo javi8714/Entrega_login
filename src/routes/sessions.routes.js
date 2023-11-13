@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { usersService } from "../dao/index.js";
+import { usersService } from "../dao/managers/index.js";
 import { createHash, isValidPassword } from "../utils.js";
 import passport from "passport";
 import { SessionsController } from "../controllers/session.controller.js";
@@ -26,7 +26,10 @@ router.get("/github-callback", passport.authenticate("githubLoginStrategy",{
     failureRedirect:"/api/sessions/fail-signup"
 }), SessionsController.loginGitHub);
 
+router.post("/forgot-password", SessionsController.forgotPassword);
+
+router.post("/reset-password", SessionsController.resetPassword);
+
 router.get("/logout", SessionsController.logout);
 
 export {router as sessionsRouter};
-

@@ -8,7 +8,7 @@ export const config = {
     },
     FileSystem: {
         prdoductsFile:"products.json",
-        cartsFile:"carts.json",º
+        cartsFile:"carts.json",
     },
     mongo:{
        url:process.env.MONGO_URL

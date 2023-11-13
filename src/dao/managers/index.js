@@ -6,8 +6,6 @@ import { TicketsMongo } from "./ticketsMongo.js";
 
 
 
-
-
 connectDB();
 
 const productService = new ProductManagerMongo();

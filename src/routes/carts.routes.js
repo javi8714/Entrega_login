@@ -2,7 +2,7 @@ import { Router } from "express";
 import { CartManagerMongo } from "../dao/managers/cartManagerMongo.js";
 import { ProductManagerMongo } from "../dao/managers/productManagerMongo.js";
 import { productSDao } from "../dao/index.js";
-import { cartService } from "../controllers/cart.controller.js";
+import { cartService } from "../controllers/carts.controller.js";
 
 
 const router = Router();

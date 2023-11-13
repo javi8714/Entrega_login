@@ -1,9 +1,9 @@
 
 import { Router } from "express"; 
-import { productSDao } from "../dao/managers/index.js";
 import { ProductsController } from "../controllers/products.controller.js";
 
 const routerA = Router()
+
 
 routerA.get('/', ProductsController.getProducts)
 
@@ -14,5 +14,6 @@ routerA.post("/", ProductsController.createProduct);
 routerA.put("/:pid", ProductsController.updateProduct);
 
 routerA.delete("/:pid", ProductsController.deleteProduct);
+
 
 export {routerA as productsRouter}
