@@ -1,30 +1,22 @@
 import { Router } from "express";
-import { usersService } from "../dao/managers/index.js";
-import { createHash, isValidPassword } from "../utils.js";
 import passport from "passport";
+//importar el controlador de Sessions
 import { SessionsController } from "../controllers/session.controller.js";
+import { uploaderProfile } from "../utils.js";
 
 const router = Router();
 
-router.post("/signup", passport.authenticate("signupStrategy",{
+router.post("/signup", uploaderProfile.single("avatar") , passport.authenticate("signupStrategy", {
     failureRedirect:"/api/sessions/fail-signup"
-}) , SessionsController.signup);
+}), SessionsController.redirectLogin);
 
 router.get("/fail-signup", SessionsController.failSignup);
 
-router.post("/login", passport.authenticate("loginStrategy",{
+router.post("/login", passport.authenticate("loginStrategy", {
     failureRedirect:"/api/sessions/fail-login"
-}), SessionsController.redirectLogin);
+}), SessionsController.renderProfile);
 
 router.get("/fail-login", SessionsController.failLogin);
-
-router.post("/changePass", SessionsController.changePassword);
-
-router.get("/loginGithub", passport.authenticate("githubLoginStrategy"));
-
-router.get("/github-callback", passport.authenticate("githubLoginStrategy",{
-    failureRedirect:"/api/sessions/fail-signup"
-}), SessionsController.loginGitHub);
 
 router.post("/forgot-password", SessionsController.forgotPassword);
 

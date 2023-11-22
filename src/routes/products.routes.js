@@ -1,22 +1,15 @@
-
-import { Router } from "express"; 
+import { Router } from "express";
+//importar el controlador de productos
 import { ProductsController } from "../controllers/products.controller.js";
+import { checkRole, checkAuthenticated } from "../middlewares/auth.js";
+import { uploaderProduct } from "../utils.js";
 
-const routerA = Router()
-<<<<<<< HEAD
+const router = Router();
 
-=======
->>>>>>> bd896478c799f9a9ea99440a64c99bb64ae0ca3c
+router.get("/", ProductsController.getProducts);
+router.get("/:pid", ProductsController.getProduct);
+router.post("/", checkAuthenticated, checkRole(["admin", "superadmin","premium"]), uploaderProduct.single("thumbnail") , ProductsController.createProduct);
+router.put("/:pid", checkAuthenticated, checkRole(["admin"]), ProductsController.updateProduct);
+router.delete("/:pid", checkAuthenticated, checkRole(["admin","premium"]), ProductsController.deletProduct);
 
-routerA.get('/', ProductsController.getProducts)
-
-routerA.get("/:pid", ProductsController.getProductID);
-
-routerA.post("/", ProductsController.createProduct);
-
-routerA.put("/:pid", ProductsController.updateProduct);
-
-routerA.delete("/:pid", ProductsController.deleteProduct);
-
-
-export {routerA as productsRouter}
+export {router as productsRouter}

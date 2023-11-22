@@ -1,13 +1,9 @@
 <h1>Pagina principal</h1>
 
-<h2>Formulario de login</h2>
+<input id="chatbox" type="text" placeholder="Ingrese el mensaje"/>
 
-<form method="post" action="/crearCookie">
-   <input type="text"placeholder="nopmbre" name="user_name"/>
-   <br/><br>
-   <input type="email" placeholder="Correo" name="email"/>
-   <br/><br>
-   <button>Send</button>
-</form>
-<hr/>
-<a href="/leerCookies">Leer cookies</a>
+<div id="messageLogs"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="socket.io/socket.io.js"></script>
+<script src="/js/home.js"></script>

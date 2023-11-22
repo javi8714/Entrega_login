@@ -1,12 +1,11 @@
-<h1>Formulario de login</h1>
-<p>{{message}}</p>
-<p style="color: firebrick">{{error}}</p>
+<h1>Pagina de Login</h1>
 
-
-<form method="post"action="/api/sessions/login">
-    <input type="email" placeholder="correo" name="email"/>
-    <br><br/>
-    <input type="text" placeholder="contraseña" name="password"/>
-    <br><br/>
+<form method="post" action="/api/sessions/login">
+    <input type="text" placeholder="correo" name="email"/>
+    <br/><br/>
+    <input type="text" placeholder="Contraseña" name="password"/>
+    <br/><br/>
     <button>Loguearse</button>
 </form>
+<hr>
+<a href="/forgot-password">Olvide mi Contraseña</a>

@@ -1,17 +1,13 @@
 {
-<<<<<<< HEAD
-  "name": "Entrega_setup_ecommerce",
-=======
-  "name": "Tercera_practica_integradora",
->>>>>>> bd896478c799f9a9ea99440a64c99bb64ae0ca3c
+  "name": "Cuarta_practica_integradora",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon src/app.js",
-    "test": "mocha test/integration.test.js"
+    "update-products": "node src/scripts/mongo.scripts.js"
   },
   "keywords": [],
   "author": "",
@@ -36,10 +32,7 @@
     "passport-local": "^1.0.0",
     "session-file-store": "^1.5.0",
     "socket.io": "^4.7.2",
-<<<<<<< HEAD
     "supertest": "^6.3.3",
-=======
->>>>>>> bd896478c799f9a9ea99440a64c99bb64ae0ca3c
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
     "uuid": "^9.0.0",

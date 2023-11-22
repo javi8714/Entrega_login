@@ -23,4 +23,4 @@ export const config = {
         password:process.env.GMAIL_SALES_PASSWORD,
         secretToken:process.env.SECRET_TOKEN_EMAIL
     }
-}
+};

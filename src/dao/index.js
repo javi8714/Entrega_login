@@ -1,18 +1,10 @@
-import { ProductManagerMongo } from "./managers/productManagerMongo.js"
-import { CartManagerMongo } from "./managers/cartManagerMongo.js";
-import { connectDB } from "../config/dbConnection..js";
-import { UsersMongo } from "./managers/users.mongo.js";
-import { TicketsMongo } from "./managers/ticketsMongo.js"; 
+import { ProductsMongo } from "./mongo/productsMongo.js";
+import {UsersMongo} from "./mongo/usersMongo.js";
+import {TicketsMongo} from "./mongo/ticketsMongo.js";
+import {CartsMongo} from "./mongo/cartsMongo.js";
 
-
-
-connectDB();
-
-const productService = new ProductManagerMongo();
-const cartService = new CartManagerMongo();
-const usersService = new UsersMongo();
+export const productsDao = new ProductsMongo();
+export const usersDao = new UsersMongo();
 export const ticketsDao = new TicketsMongo();
-
-
-export {productService, cartService, usersService}
+export const cartsDao = new CartsMongo();
 

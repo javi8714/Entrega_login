@@ -1,23 +1,20 @@
-import { ProductManagerMongo } from '../dao/managers/productManagerMongo.js';
-const p = new ProductManagerMongo();
-export class ProductService{
-    static categories = async()=>{
-        return await pm.categories();
-    }
-    static getProducts = async({ category }, options)=>{
-        return await p.getProducts({ category }, options);
-    }
-    static getProductByID = async(pid)=>{
-        return await p.getProductById(pid);
-    }
-    static addProduct = async(obj)=>{
-        return await p.addProduct(obj);
-    }
-    static updateProduct = async(pid,obj)=>{
-        return await p.updateProduct(pid,obj);
-    }
-    static deleteProduct = async(id)=>{
-        return await p.deleteProduct(id);
-    }
-    
+//importar la capa de persisitencia
+import { productsDao } from "../dao/managers/index.js";
+
+export class ProductsService{
+    static getProducts = async()=>{
+        return await productsDao.get();
+    };
+
+    static getProduct = async(productId)=>{
+        return await productsDao.getById(productId);
+    };
+
+    static createProduct = async(productInfo)=>{
+        return await productsDao.save(productInfo);
+    };
+
+    static deleteProduct = async(productId)=>{
+        return await productsDao.delete(productId);
+    };
 }

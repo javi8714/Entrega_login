@@ -1,61 +1,53 @@
-const socketClient = io()
+const socketClient = io();
 
-const nombreUsuario = document.getElementById("nombreusuario")
-const formulario = document.getElementById("formulario")
-const inputmensaje = document.getElementById("mensaje")
-const chat = document.getElementById("chat")
+const chatbox = document.getElementById("chatbox");
+const chat = document.getElementById("messageLogs");
 
+let user;
 
-
-
-let usuario = null
-
-if (!usuario) {
-    Swal.fire({
-        title: "Bienvenido al ecommerce",
-        text: "Ingresa tu usuario",
-        input: "text",
-        inputValidator: (value) => {
-            if (!value) {
-                return "Necesitas ingresar tu Nombre"
-            }
+Swal.fire({
+    title:"Identificate",
+    input:"text",
+    text:"Ingresa un nombre de usuario para el chat",
+    inputValidator:(value)=>{
+        if(!value){
+            return "El nombre de usuario es obligatorio"
         }
-    })
-        .then(username => {
-            usuario = username.value
-            nombreUsuario.innerHTML = usuario
-            socketClient.emit("nuevousuario", usuario)
-        })
-}
+    },
+    allowOutsideClick:false
+}).then((result)=>{
+    // console.log("result", result);
+    user = result.value;
+    socketClient.emit("authenticated",`usuario ${user} ha iniciado sesión`)
+    // console.log("user", user);
+});
 
-formulario.onsubmit = (e) => {
-    e.preventDefault()
-    const info = {
-        user: usuario,
-        message: inputmensaje.value
+chatbox.addEventListener("keyup", (e)=>{
+    // console.log(e.key);
+    if(e.key === "Enter"){
+        if(chatbox.value.trim().length>0){//corrobamos que el usuario no envie datos vacios
+            socketClient.emit("message",{user:user,message:chatbox.value});
+            chatbox.value="";//borramos el campo
+        }
     }
-    console.log(info)
-    socketClient.emit("mensaje", info)
-    inputmensaje.value = " "
+});
 
-}
+socketClient.on("messageHistory",(dataServer)=>{
+    let messageElmts = "";
+    // console.log("dataServer", dataServer);
+    dataServer.forEach(item=>{
+        messageElmts = messageElmts + `${item.user}: ${item.message} <br/>`
+    });
+    chat.innerHTML = messageElmts;
+});
 
-socketClient.on("chat", mensaje => {
-    const chatrender = mensaje.map(e => {
-        return `<p><strong>${e.user}</strong>${e.message}`
-    }).join(" ")
-    chat.innerHTML = chatrender
-
-
-})
-
-socketClient.on("broadcast", usuario => {
-    Toastify({
-        text: `Ingreso ${usuario} al chat`,
-        duration: 4000,
-        position: 'right',
-        style: {
-            background: "linear-gradient(to right, #bbff00, #777799)",
-        }
-    }).showToast()
-})
+socketClient.on("newUser",(data)=>{
+    if(user){
+        //si ya el usuario esta autenticado, entonces puede recibir notificaciones
+        Swal.fire({
+            text:data,
+            toast:true,
+            position:"top-right"
+        });
+    }
+});

@@ -1,44 +1,21 @@
-import { ProductManagerMongo } from "../dao/managers/productManagerMongo.js";
-const pm = new ProductManagerMongo();
-export class ViewController {
-    static renderHome = (req, res) => {
-        const listadeproductos = pm.getProductsView()
-        res.render("realtimeproducts");
-    }
+export class ViewsController{
+    static renderHome = (req,res)=>{
+        res.render("home");
+    };
 
-    static rendeRealTimeProducts = (req, res) => {
-        res.render("realtimeproducts");
-    }
-
-    static renderChat = (req, res) => {
-        res.render("chat");
-    }
-
-    static renderRegistro = (req, res) => {
+    static renderSignup = (req,res)=>{
         res.render("signup");
-    }
+    };
 
-    static renderLogin =  (req, res) => {
+    static renderLogin = (req,res)=>{
         res.render("login");
-    }
-
-    static renderCambioPassword = (req, res) => {
-        res.render("changePassword");
-    }
-
-    static renderProfile = (req, res) => {
-        res.render("profile", { user: req.user });
-        
-    }
-<<<<<<< HEAD
-    static renderForgot = (req,res)=>{
-        res.render("forgotPassword");
     };
-=======
-    static renderProfile = (req, res) => {
-        res.render("profile", { user: req.user });
-        
-    }
+
+    static renderProfile = (req,res)=>{
+        const user = req.user;
+        res.render("profile",{user});
+    };
+
     static renderForgot = (req,res)=>{
         res.render("forgotPassword");
     };
@@ -47,11 +24,4 @@ export class ViewController {
         const token = req.query.token;
         res.render("resetPassword",{token});
     };
->>>>>>> bd896478c799f9a9ea99440a64c99bb64ae0ca3c
-
-    static renderResetPass = (req,res)=>{
-        const token = req.query.token;
-        res.render("resetPassword",{token});
-    };
-
 }
